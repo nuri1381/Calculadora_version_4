@@ -1,0 +1,228 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    
+    <title>Proyecto Calculadora</title>
+    <style>
+        #mostrar {
+            pointer-events: none;
+        }
+        
+        @media (max-width: 600px) {
+
+            #container {
+                width: 100%;
+                height: 100%;
+				margin:1px;
+            }
+
+            .uno{
+                padding:5px;
+                height:80px;
+            } 
+            .dos{
+                padding:8px;
+                height:80px;
+            }
+        }
+
+    </style>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function() {
+            var operacion = '';
+            var resultado = 0;
+            var num1 = "";
+            var num2 = "";
+            var operaciofeta = false;
+            
+            $(".numero").click(function() {
+                if(operaciofeta == true) {
+                    $("#mostrar").val("");
+                    operaciofeta = false;
+                }
+                
+                $("#mostrar").val($("#mostrar").val() + $(this).val());
+                if (operacion == '') {
+                    num1 = num1 + $(this).val();
+                }
+                else {
+                    num2 = num2 + $(this).val();
+                }
+                
+            });
+            
+            
+            $("#añade").click(function() {
+               
+            });
+            
+
+            $("#borra").click(function() {
+                $("#mostrar").val("");
+                operacion = '';
+                num1 = 0;
+                num2 = 0;
+                resultado = 0;
+            });
+            
+            
+            $("#borrauno").click(function() {
+                historial = $("#mostrar").val();
+                
+                if (operacion == '') {
+                    num1 = num1.slice(0,-1);
+                }
+                else {
+                    num2 = num2.slice(0,-1);
+                }
+                
+                historial = historial.slice(0,-1);
+                $("#mostrar").val(historial);
+            });
+            
+            
+            $("#suma").click(function() {
+                var cadena = $("#mostrar").val();
+                var lastLetter = cadena.charAt(cadena.length - 1)
+                if (lastLetter != "-" && lastLetter != "+" && lastLetter != "/" && lastLetter != "x" && $("#mostrar").val() != "") {
+                    $("#mostrar").val(cadena + $(this).val());
+                    operacion = $(this).val();
+                }
+            });
+            
+            
+            $("#multiplica").click(function() {
+                var cadena = $("#mostrar").val();
+                var lastLetter = cadena.charAt(cadena.length - 1)
+                if (lastLetter != "-" && lastLetter != "+" && lastLetter != "/" && lastLetter != "x" && $("#mostrar").val() != "") {
+                    $("#mostrar").val(cadena + $(this).val());
+                    operacion = $(this).val();
+                }
+            });
+            
+            
+            $("#divide").click(function() {
+                var cadena = $("#mostrar").val();
+                var lastLetter = cadena.charAt(cadena.length - 1)
+                if (lastLetter != "-" && lastLetter != "+" && lastLetter != "/" && lastLetter != "x" && $("#mostrar").val() != "" ) {
+                    $("#mostrar").val(cadena + $(this).val());
+                    operacion = $(this).val();
+                }
+            });
+            
+            
+            $("#resta").click(function() {
+                var cadena = $("#mostrar").val();
+                var lastLetter = cadena.charAt(cadena.length - 1)
+                if (lastLetter != "-" && lastLetter != "+" && lastLetter != "/" && lastLetter != "x" && $("#mostrar").val() != "") {
+                    $("#mostrar").val(cadena + $(this).val());
+                    operacion = $(this).val();
+                }
+            });
+            
+            
+            $("#resultado").click(function() {
+                switch (operacion) {
+                    case "+":
+                        resultado = Number(num1) + Number(num2);
+                        break
+                    case "-":
+                        resultado = Number(num1) - Number(num2);
+                        break
+                    case "/":
+                        if (Number(num2) != 0) {
+                            resultado = Number(num1) / Number(num2);
+                        }
+                        else if ((Number(num1) == 0) && (Number(num2) == 0)) resultado = "División indefinida";
+                        else if ((Number(num2)) == 0 && (Number(num1) != 0)) {
+                            resultado = "No se puede dividir por 0";
+                        }
+                        break
+                    case "x":
+                        resultado = Number(num1) * Number(num2);
+                        break
+                }
+                $("#mostrar").val(resultado);
+                operaciofeta = true;
+                num1 = 0;
+                num2 = 0;
+                resultado = 0;
+                operacion = '';
+            });
+
+
+
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+    <div class='container-fluid'>
+
+        <form class='row ' id='container'>
+
+            <div class=' col-12 col-sm-3 col-md-3 '>
+                <div class='row'>
+                    <h1 class='col text-center'>Calculadora</h1>
+                </div>
+
+
+                <div class='row '>
+                    <input id="mostrar" class='col m-2 p-3 shadow text-right' type="text" size="50" name="resultat" />
+                </div>
+                <div class='row '>
+					<button class=" dos col btn btn-info text-white p-3 mx-2 mt-2 mb-2" type="button" value=""><a href='cientifica.html'>Cient</a>< /button>
+                    <input class="  dos col btn btn-info text-white p-3 mx-2 mt-2 mb-2" type="button" value="Conv" />	
+                    <input class="dos col btn btn-info text-white p-3 mx-2 mt-2 mb-2" type="button" value="Bin" />                   
+                    <input id='borra' class=" dos col btn btn-danger text-white p-3 mx-2 mt-2 mb-2" type="button" value="C" />
+                </div>
+                <div class='row div '>
+                    <input class=" uno col btn btn-info text-white p-2 mx-2 numero" type="button" value="7" />
+                    <input class="  uno col btn btn-info text-white p-2 mx-2 numero" type="button" value="8" />
+                    <input class=" uno  col btn btn-info text-white p-2 mx-2 numero" type="button" value="9" />
+                     <button id='borrauno' class ="uno  col btn btn-info text-white p-2 mx-2 numero" type="button" >
+                         <!--dos col btn btn-info text-white p-3 mx-2 mt-2 mb-2-->
+                        <div>
+                            <i class="fas fa-angle-left"></i>
+                        </div>
+                    </button>
+                </div>
+                <div class='row div '>
+                    <input class="  uno col btn btn-info text-white p-2 mx-2 mt-2 numero" type="button" value="4" />
+                    <input class=" uno col btn btn-info text-white p-2 mx-2 mt-2 numero" type="button" value="5" />
+                    <input class=" uno col btn btn-info text-white p-2 mx-2 mt-2 numero" type="button" value="6" />
+                    <input id='divide' class=" uno col btn btn-info text-white p-2 mx-2 mt-2" type="button" value="/" />
+                </div>
+                <div class='row div'>
+                    <input class=" uno col btn btn-info text-white p-2 mx-2 mt-2 numero" type="button" value="1" />
+                    <input class=" uno col btn btn-info text-white p-2 mx-2 mt-2 numero" type="button" value="2" />
+                    <input class=" uno col btn btn-info text-white p-2 mx-2 mt-2 numero" type="button" value="3" />
+                    <input id='multiplica' class=" uno col btn btn-info text-white p-2 mx-2 mt-2" type="button" value="x" />
+                </div>
+                <div class='row div '>
+                    <input class=" uno col btn btn-info text-white p-2 mx-2 mt-2 numero" type="button" value="0" />
+                    <input id='suma' class=" uno col btn btn-info text-white p-2 mx-2 mt-2" type="button" value="+" />
+                    <input id='resta' class=" uno col btn btn-info text-white p-2 mx-2 mt-2" type="button" value="-" />
+                    <input id='resultado' class=" uno col btn btn-info text-white p-2 mx-2 mt-2" type="button" value="=" />
+                </div>
+
+            </div>
+    </form>
+</div>
+
+</body>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!--<script src="js /miescript.js"></script>-->
+
+</html>
